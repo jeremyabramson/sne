@@ -7,7 +7,7 @@ const scrapeFunc = async (urllist) => {
 	for(let url of urllist) {
 		let filePath = url.substring(28) // take everything after the initial linkedin url
 		filePath = filePath.replace("/", "")
-		if (!fs.existsSync('C:\\Users\\ryanw\\Desktop\\linkedins\\' + filePath + '.txt')) {
+		if (!fs.existsSync('C:\\Users\\ryanw\\Desktop\\linkedins\\' + filePath + '.txt')) { // check if file is already created, so you don't repeat work if you stop/rerun the script
 			console.log(url)
 			const profile = await profileScraper(url)
 			if(JSON.stringify(profile) !== '{}') {

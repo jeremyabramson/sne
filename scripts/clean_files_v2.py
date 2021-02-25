@@ -1,19 +1,20 @@
-file = open('C:\\Users\\ryanw\\Desktop\\ng_linkedins_large_v2_clean.txt', 'r')
-lines = file.readlines()
-link_set = set()
-for line in lines:
-	if len(line) != 0:
-		link_set.add(line)
-file.close()
+import json
+import os
 
-big_file = open('C:\\Users\\ryanw\\Desktop\\ng_linkedins_large_v2_clean_v2.txt', 'w+')
-for link in link_set:
-	ind = link.find('%3Ftrk')
-	if(ind != -1):
-		link = link[0:ind]
+def read_and_rename(filename):
+	# Open a file: file
+	file = open(filename,mode='r', encoding="utf8")
+	 
+	# read all lines at once
+	obj = json.loads(file.read())
+	new_name = obj['profile']['name']
+	# close the file
+	file.close()
 
-	ind2 = link.find('/%257')
-	if(ind2 != -1):
-		link = link[0:ind2]
-	big_file.write(link + "\n")
-big_file.close()
+	return new_name.replace(" ", "_").replace("\"", "")
+
+folder_dir = "C:\\Users\\ryanw\\Desktop\\linkedins"
+for f in enumerate(os.listdir(folder_dir)):
+	filename = f[1]
+	dst = read_and_rename(folder_dir + "\\" + filename)
+	os.rename(folder_dir + "\\" + filename, "C:\\Users\\ryanw\\Desktop\\linkedin_names\\" + dst + ".txt")
